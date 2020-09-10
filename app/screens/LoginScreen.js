@@ -7,18 +7,34 @@ import { TouchableOpacity, TextInput } from 'react-native-gesture-handler';
 import globals from '../config/globals'
 import CustomButton from '../components/CustomButton'
 import Firebase from '../config/firebase'
+import { bindActionCreators } from 'redux';
+import { updateEmail, updatePassword, login } from '../redux/actions/user'
+import { connect } from 'react-redux';
 
-export default LoginScreen = ({ navigation }) => {
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
+
+const mapDispatchToprops = dispatch => {
+    return bindActionCreators({ updateEmail, updatePassword, login }, dispatch)
+}
+const mapStateToProps = state => {
+    return {
+        user: state.user
+    }
+}
+const LoginScreen = ({ navigation, ...props }) => {
+    // const [email, setEmail] = useState("")
+    // const [password, setPassword] = useState("")
 
 
+    // const handleLogin = () => {
+    //     console.log("pressed!")
+    //     Firebase.auth()
+    //         .signInWithEmailAndPassword(email, password)
+    //         .then(() => navigation.navigate('Home'))
+    //         .catch(error => console.log(error))
+    // }
     const handleLogin = () => {
-        console.log("pressed!")
-        Firebase.auth()
-            .signInWithEmailAndPassword(email, password)
-            .then(() => navigation.navigate('Home'))
-            .catch(error => console.log(error))
+        props.login()
+        navigation.navigate('Home')
     }
 
     return (
@@ -26,8 +42,8 @@ export default LoginScreen = ({ navigation }) => {
             <View style={styles.itemView}>
                 <TextInput style={{ ...globals.textInput, ...styles.textStyle }}
                     placeholder="Email..."
-                    value={email}
-                    onChangeText={txt => setEmail(txt)}
+                    value={props.user.email}
+                    onChangeText={txt => props.updateEmail(txt)}
                     height={50}
                 />
             </View>
@@ -35,8 +51,8 @@ export default LoginScreen = ({ navigation }) => {
                 <TextInput style={{ ...globals.textInput, ...styles.textStyle }}
                     placeholder="Password..."
                     secureTextEntry={true}
-                    value={password}
-                    onChangeText={txt => setPassword(txt)}
+                    value={props.user.password}
+                    onChangeText={txt => props.updatePassword(txt)}
                     height={50}
                 />
             </View>
@@ -84,3 +100,4 @@ const styles = StyleSheet.create({
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     },
 })
+export default connect(mapStateToProps, mapDispatchToprops)(LoginScreen)

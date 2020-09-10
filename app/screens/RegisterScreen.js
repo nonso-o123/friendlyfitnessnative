@@ -7,18 +7,35 @@ import { TouchableOpacity, TextInput } from 'react-native-gesture-handler';
 import globals from '../config/globals'
 import CustomButton from '../components/CustomButton'
 import Firebase from '../config/firebase'
+import { bindActionCreators } from 'redux';
+import { updateEmail, updatePassword, updateName, register } from '../redux/actions/user'
+import { connect } from 'react-redux';
 
-export default RegisterScreen = ({ navigation }) => {
-    const [name, setName] = useState("")
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({ updateEmail, updatePassword, updateName, register }, dispatch)
+}
+const mapStateToProps = state => {
+    return {
+        user: state.user
+    }
+}
+
+const RegisterScreen = ({ navigation, ...props }) => {
+    // const [name, setName] = useState("")
+    // const [email, setEmail] = useState("")
+    // const [password, setPassword] = useState("")
+
+    // const handleSignUp = () => {
+    //     console.log("pressed!")
+    //     Firebase.auth()
+    //         .createUserWithEmailAndPassword(email, password)
+    //         .then(() => navigation.navigate('Home'))
+    //         .catch(error => console.log(error))
+    // }
 
     const handleSignUp = () => {
-        console.log("pressed!")
-        Firebase.auth()
-            .createUserWithEmailAndPassword(email, password)
-            .then(() => navigation.navigate('Home'))
-            .catch(error => console.log(error))
+        props.register()
+        navigation.navigate('Home')
     }
 
     return (
@@ -26,16 +43,16 @@ export default RegisterScreen = ({ navigation }) => {
             <View style={styles.itemView}>
                 <TextInput style={{ ...globals.textInput, ...styles.textStyle }}
                     placeholder="Name..."
-                    value={name}
-                    onChangeText={txt => setName(txt)}
+                    value={props.user.name}
+                    onChangeText={txt => props.updateName(txt)}
                     height={50}
                 />
             </View>
             <View style={styles.itemView}>
                 <TextInput style={{ ...globals.textInput, ...styles.textStyle }}
                     placeholder="Email..."
-                    value={email}
-                    onChangeText={txt => setEmail(txt)}
+                    value={props.user.email}
+                    onChangeText={txt => props.updateEmail(txt)}
                     height={50}
                 />
             </View>
@@ -43,8 +60,8 @@ export default RegisterScreen = ({ navigation }) => {
                 <TextInput style={{ ...globals.textInput, ...styles.textStyle }}
                     placeholder="Password..."
                     secureTextEntry={true}
-                    value={password}
-                    onChangeText={txt => setPassword(txt)}
+                    value={props.user.password}
+                    onChangeText={txt => props.updatePassword(txt)}
                     height={50}
                 />
             </View>
@@ -91,3 +108,4 @@ const styles = StyleSheet.create({
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     },
 })
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterScreen)
