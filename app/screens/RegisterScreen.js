@@ -21,21 +21,10 @@ const mapStateToProps = state => {
 }
 
 const RegisterScreen = ({ navigation, ...props }) => {
-    // const [name, setName] = useState("")
-    // const [email, setEmail] = useState("")
-    // const [password, setPassword] = useState("")
-
-    // const handleSignUp = () => {
-    //     console.log("pressed!")
-    //     Firebase.auth()
-    //         .createUserWithEmailAndPassword(email, password)
-    //         .then(() => navigation.navigate('Home'))
-    //         .catch(error => console.log(error))
-    // }
 
     const handleSignUp = () => {
         props.register()
-        navigation.navigate('Home')
+        navigation.navigate('MainScreen')
     }
 
     return (

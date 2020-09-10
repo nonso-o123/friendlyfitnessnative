@@ -9,7 +9,7 @@ import thunkMiddleware from 'redux-thunk'
 import Reducer from './app/redux/reducer';
 import { Provider } from 'react-redux';
 
-
+// YellowBox.ignoreWarnings(['Setting a timer'])
 const middleware = applyMiddleware(thunkMiddleware)
 const store = createStore(Reducer, middleware)
 
@@ -19,7 +19,6 @@ export default function App() {
   return (
     <Provider store={store}>
       <SwitchNavigator />
-
     </Provider>
   );
 }

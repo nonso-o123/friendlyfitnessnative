@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { StyleSheet, Text, View, Button, TextInput } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import globals from '../config/globals'
 import PlayVideo from '../components/PlayVideo'
 import CustomButton from '../components/CustomButton'
@@ -10,34 +11,31 @@ export default function HomeScreen({ navigation }) {
     const [text, changeText] = useState('')
 
     return (
-        <View>
-            <PlayVideo />
+        <SafeAreaView>
+            <View style={globals.mainAreaView}>
+                <PlayVideo />
 
-            <View style={styles.textView}>
-                <Text style={globals.regularText}>  Don’t let COVID-19 stop you from achieving your fitness
-                goals. Invite your friends to this virtual workout room
+                <View style={styles.textView}>
+                    <Text style={globals.regularText}>  Don’t let COVID-19 stop you from achieving your fitness
+                    goals. Invite your friends to this virtual workout room
                   and keep making progress together! </Text>
-            </View>
-            <View style={styles.textView}>
-                <CustomInputText placeholder="Search for your favorite workout"
-                    onChangeText={val => changeText(val)}
-                    value={text}
-                />
-                <CustomButton title="Search" />
+                </View>
+                <View style={styles.textView}>
+                    <CustomInputText placeholder="Search for your favorite workout"
+                        onChangeText={val => changeText(val)}
+                        value={text}
+                    />
+                    <CustomButton title="Search" />
 
-            </View>
-            <View style={styles.textView}>
-                <Text style={globals.mainText}>
-                    Recommended Videos
+                </View>
+                <View style={styles.textView}>
+                    <Text style={globals.mainText}>
+                        Recommended Videos
                 </Text>
+                </View>
             </View>
-            <CustomIcon
-                iconName="info"
-                navigateTo="About"
-                pageName="About"
-                navigation={navigation}
-            />
-        </View>
+        </SafeAreaView>
+
     )
 }
 

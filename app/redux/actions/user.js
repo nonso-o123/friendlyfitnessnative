@@ -1,5 +1,5 @@
 import * as ActionTypes from '../constants'
-import Firebase from '../../config/firebase'
+import Firebase, { db } from '../../config/firebase'
 
 export const updateEmail = email => {
     return {
@@ -27,8 +27,22 @@ export const login = () => {
         try {
             const { email, password } = getState().user
             const response = await Firebase.auth().signInWithEmailAndPassword(email, password)
-            dispatch({ type: ActionTypes.LOGIN, payload: response.user })
+            dispatch(getUser(response.user.uid))
         } catch (e) {
+            console.log(e)
+        }
+    }
+}
+export const getUser = uid => {
+    return async (dispatch, getState) => {
+        try {
+            const user = await db
+                .collection('users')
+                .doc(uid)
+                .get()
+            dispatch({ type: ActionTypes.LOGIN, payload: user.data })
+        }
+        catch (e) {
             console.log(e)
         }
     }
@@ -39,7 +53,17 @@ export const register = () => {
         try {
             const { email, password } = getState().user
             const response = await Firebase.auth().createUserWithEmailAndPassword(email, password)
-            dispatch({ type: ActionTypes.REGISTER, payload: response.user })
+            if (response.user.uid) {
+                const user = {
+                    uid: response.user.uid,
+                    email: email
+                }
+                db.collection('users')
+                    .doc(response.user.uid)
+                    .set(user)
+                dispatch({ type: ActionTypes.REGISTER, payload: user })
+            }
+
         } catch (e) {
             console.log(e)
         }

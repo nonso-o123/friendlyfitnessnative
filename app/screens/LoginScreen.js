@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     StyleSheet, Text, View, StatusBar,
     Platform
@@ -8,12 +8,12 @@ import globals from '../config/globals'
 import CustomButton from '../components/CustomButton'
 import Firebase from '../config/firebase'
 import { bindActionCreators } from 'redux';
-import { updateEmail, updatePassword, login } from '../redux/actions/user'
+import { updateEmail, updatePassword, login, getUser } from '../redux/actions/user'
 import { connect } from 'react-redux';
 
 
 const mapDispatchToprops = dispatch => {
-    return bindActionCreators({ updateEmail, updatePassword, login }, dispatch)
+    return bindActionCreators({ updateEmail, updatePassword, getUser, login }, dispatch)
 }
 const mapStateToProps = state => {
     return {
@@ -21,21 +21,19 @@ const mapStateToProps = state => {
     }
 }
 const LoginScreen = ({ navigation, ...props }) => {
-    // const [email, setEmail] = useState("")
-    // const [password, setPassword] = useState("")
 
+    useEffect(() => {
+        Firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                props.getUser(user.uid)
+                if (props.user != null) {
+                    navigation.navigate('MainScreen')
+                }
+            }
+        })
 
-    // const handleLogin = () => {
-    //     console.log("pressed!")
-    //     Firebase.auth()
-    //         .signInWithEmailAndPassword(email, password)
-    //         .then(() => navigation.navigate('Home'))
-    //         .catch(error => console.log(error))
-    // }
-    const handleLogin = () => {
-        props.login()
-        navigation.navigate('Home')
-    }
+    })
+
 
     return (
         <View style={styles.container}>
@@ -62,7 +60,7 @@ const LoginScreen = ({ navigation, ...props }) => {
             <View style={styles.itemView}>
                 <TouchableOpacity
                     activeOpacity={0.7}
-                    onPress={handleLogin}
+                    onPress={props.login}
                 >
                     <CustomButton
                         title="LOGIN"

@@ -4,7 +4,8 @@ export default {
         secondary: '#b0d16d',
         black: '#000',
         white: '#fff',
-        grey: '#e7e7e7'
+        grey: '#e7e7e7',
+        darkGrey: '#7e817e'
     },
     defaultFlex: {
         flex: 1,
@@ -13,6 +14,10 @@ export default {
     },
     topView: {
         flexDirection: 'row',
+    },
+    mainAreaView: {
+        marginVertical: 5,
+        paddingVertical: 5
     },
     navButton: {
         margin: 5,
