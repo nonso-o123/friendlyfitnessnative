@@ -3,22 +3,24 @@
     "name": "FriendlyFitnessNative",
     "slug": "FriendlyFitnessNative",
     "version": "1.0.0",
-    "orientation": "default",
-    "icon": "./app/assets/icon.png",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
     "splash": {
-      "image": "./app/assets/splash.png",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
     "web": {
-      "favicon": "./app/assets/favicon.png"
+      "favicon": "./assets/favicon.png"
     }
   }
 }
