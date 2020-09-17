@@ -12,7 +12,6 @@ export default function CustomInputText({ placeholder, onChangeText, value, pass
             value={value}
             placeholder={placeholder}
             secureTextEntry={password}
-            adjustsFontSizeToFit={true}
             allowFontScaling={true}
         />
 

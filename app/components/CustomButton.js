@@ -12,7 +12,6 @@ export default function CustomButton({ title, fontSize }) {
     return (
         <View style={styles.button}>
             <Text style={{ ...styles.buttonText, fontSize: size }}
-                adjustsFontSizeToFit={true}
                 allowFontScaling={true}
             >{title}</Text>
         </View>

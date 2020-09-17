@@ -6,6 +6,7 @@ import AboutScreen from '../screens/AboutScreen'
 import ProfileScreen from '../screens/ProfileScreen'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import globals from '../config/globals';
+import StackNavigation from '../navigation/StackNavigation';
 
 
 const Tab = createBottomTabNavigator();
@@ -31,7 +32,7 @@ export default function Navigation() {
                 inactiveTintColor: globals.colors.darkGrey
             }}
         >
-            <Tab.Screen name="Home" component={HomeScreen} />
+            <Tab.Screen name="Home" component={StackNavigation} />
             <Tab.Screen name="About" component={AboutScreen} />
             <Tab.Screen name="Profile" component={ProfileScreen} />
         </Tab.Navigator>

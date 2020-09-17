@@ -4,11 +4,9 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import globals from '../config/globals'
 import PlayVideo from '../components/PlayVideo'
 import CustomButton from '../components/CustomButton'
-import CustomIcon from '../components/CustomIcon'
-import CustomInputText from '../components/CustomInputText'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 export default function HomeScreen({ navigation }) {
-    const [text, changeText] = useState('')
 
     return (
         <SafeAreaView>
@@ -21,11 +19,13 @@ export default function HomeScreen({ navigation }) {
                   and keep making progress together! </Text>
                 </View>
                 <View style={styles.textView}>
-                    <CustomInputText placeholder="Search for your favorite workout"
-                        onChangeText={val => changeText(val)}
-                        value={text}
-                    />
-                    <CustomButton title="Search" />
+                    <TouchableOpacity
+                        activeOpacity={0.7}
+                        onPress={() => navigation.navigate('Search Workout Videos')}
+                    >
+                        <CustomButton title="Search" />
+                    </TouchableOpacity>
+
 
                 </View>
                 <View style={styles.textView}>
