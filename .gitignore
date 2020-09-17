@@ -9,6 +9,6 @@ npm-debug.*
 *.orig.*
 web-build/
 app/config/firebase.*
-
+app/config/fetchVids.*
 # macOS
 .DS_Store

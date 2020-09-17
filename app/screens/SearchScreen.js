@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View, TextInput, FlatList } from 'react-native'
 import { ListItem } from 'react-native-elements'
-import fetchVids, { baseParams, KEY } from '../axios/fetchVids'
+import fetchVids, { baseParams, KEY } from '../config/fetchVids'
 import globals from '../config/globals'
 
 export default SearchScreen = ({ navigation }) => {
@@ -23,12 +23,10 @@ export default SearchScreen = ({ navigation }) => {
     const [items, setItems] = useState(initialItems)
     const [suggestions, setSuggestions] = useState([])
     const [loading, setLoading] = useState(true)
-    // const [disabled, setDisabled] = useState(true)
 
     const [term, setTerm] = useState('')
 
     const [videos, setVideos] = useState([])
-    const [selectedVideo, setSelectedVideo] = useState({})
 
 
     const handleSubmit = async (searchTerm) => {
@@ -36,42 +34,18 @@ export default SearchScreen = ({ navigation }) => {
             let response = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&key=${KEY}&q=${searchTerm}`)
             let responseJson = await response.json()
             setVideos(responseJson.items)
-            // console.log(responseJson.items)
-
-
         }
         catch (error) {
             console.log(error)
         }
-        // console.log(videos)
         navigation.navigate("Workout Video Suggestions", { name: searchTerm, data: videos })
-
-
-        //     const response = await fetchVids
-        //         .get("/search", {
-        //             params: {
-        //                 ...baseParams,
-        //                 q: searchTerm,
-        //             }
-        //         })
-        //         .catch(error => {
-        //             console.log(error)
-        //         })
-        //     setVideos(response.data.items)
-        //     console.log(response.data.items)
-        //     navigation.navigate("Workout Video Suggestions", { name: searchTerm, data: videos })
-        // }
-
-        // const handleVideoSelect = vid => {
-        //     setSelectedVideo(vid)
-        //     console.log(selectedVideo)
+        console.log(selectedVideo)
 
     }
     const suggestionOnSelect = item => {
         setTerm(item)
         handleSubmit(item)
         setLoading(true)
-        // setDisabled(false)
     }
 
     onTextChange = (txt) => {
@@ -85,7 +59,6 @@ export default SearchScreen = ({ navigation }) => {
             setLoading(true)
             setTerm(txt)
         }
-        // console.log("suggestions:" + suggestions)
         console.log(term)
     }
 
